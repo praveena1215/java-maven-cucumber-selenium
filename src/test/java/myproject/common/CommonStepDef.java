@@ -36,9 +36,12 @@ import base.BaseScenario;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -51,161 +54,203 @@ import static org.junit.Assert.assertTrue;
 
 public class CommonStepDef extends BaseScenario {
 
-  /**
-   * Go to a page
-   */
-  @When("^I go to \"(.*?)\" page$")
-  public void i_go_to_page(String pageType) throws Throwable {
+	public RemoteWebDriver driver;
 
-    String uri = pageType;
-    if (StringUtils.isNotBlank(pageType))
-    {
-      driver.get(getSiteBaseUrl() + "/" + uri);
-    }
-  }
+	/**
+	 * Go to a page
+	 */
+	@When("^I go to \"(.*?)\" page$")
+	public void i_go_to_page(String pageType) throws Throwable {
 
-  /**
-   * Validate page words
-   */
-  @Then("^The page class \"(.*?)\" should contains \"(.*?)\"$")
-  public void the_page_should_contains(String className, String keyword) throws Throwable {
-    //System.out.println(driver.findElement(By.className(className)).getText());
-    assertTrue(driver.findElement(By.className(className)).getText().contains(keyword));
-  }
+		String uri = pageType;
+		if (StringUtils.isNotBlank(pageType)) {
+			driver.get(getSiteBaseUrl() + "/" + uri);
+		}
+	}
 
-  /**
-   * Validate page title words
-   */
-  @Then("^The page title should contains \"(.*?)\"$")
-  public void the_page_title_should_contains(String keyword) throws Throwable {
-    //System.out.println("Page title is: " + driver.getTitle());
-    assertTrue(driver.getTitle().contains(keyword));
-  }
+	/**
+	 * Validate page words
+	 */
+	@Then("^The page class \"(.*?)\" should contains \"(.*?)\"$")
+	public void the_page_should_contains(String className, String keyword) throws Throwable {
+		// System.out.println(driver.findElement(By.className(className)).getText());
+		assertTrue(driver.findElement(By.className(className)).getText().contains(keyword));
+	}
 
-  /**
-   * Click on a link
-   */
-  @When("^I click link by class name \"(.*?)\"$")
-  public void i_click_link_by_class_name(String theClassName) throws Throwable {
+	/**
+	 * Validate page title words
+	 */
+	@Then("^The page title should contains \"(.*?)\"$")
+	public void the_page_title_should_contains(String keyword) throws Throwable {
+		// System.out.println("Page title is: " + driver.getTitle());
+		assertTrue(driver.getTitle().contains(keyword));
+	}
 
-      JavascriptExecutor jse = (JavascriptExecutor)driver;
-      jse.executeScript("arguments[0].click()", driver.findElement(By.className(theClassName)));
-  }
+	/**
+	 * Click on a link
+	 */
+	@When("^I click link by class name \"(.*?)\"$")
+	public void i_click_link_by_class_name(String theClassName) throws Throwable {
 
-  /**
-   * Wait till a div appear
-   */
-  @Then("^I wait for class name \"(.*?)\" visible$")
-  public void i_wait_for_class_name_visible(String theClassName) throws Throwable {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("arguments[0].click()", driver.findElement(By.className(theClassName)));
+	}
 
-      WebDriverWait wait = new WebDriverWait(driver, secondsToWait);
+	/**
+	 * Wait till a div appear
+	 */
+	@Then("^I wait for class name \"(.*?)\" visible$")
+	public void i_wait_for_class_name_visible(String theClassName) throws Throwable {
 
-      WebElement element = wait.until(
-        ExpectedConditions.visibilityOfElementLocated(By.className(theClassName)));
-  }
+		WebDriverWait wait = new WebDriverWait(driver, secondsToWait);
 
-  /**
-   * Click on a link By ID
-   */
-  @Then("^I click link by id \"(.*?)\"$")
-  public void i_click_link_by_id(String theIdName) throws Throwable {
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(theClassName)));
+	}
 
-      JavascriptExecutor jse = (JavascriptExecutor)driver;
-      jse.executeScript("arguments[0].click()", driver.findElement(By.id(theIdName)));
+	/**
+	 * Click on a link By ID
+	 */
+	@Then("^I click link by id \"(.*?)\"$")
+	public void i_click_link_by_id(String theIdName) throws Throwable {
 
-  }
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("arguments[0].click()", driver.findElement(By.id(theIdName)));
 
-  /**
-   * Click by Xpath
-   */
-  @Then("^I click link by xpath \"(.*?)\"$")
-  public void i_click_link_by_xpath(String theXPath) throws Throwable {
+	}
 
-      JavascriptExecutor jse = (JavascriptExecutor)driver;
-      jse.executeScript("arguments[0].click()", driver.findElement(By.xpath(theXPath)));
-  }
+	/**
+	 * Click by Xpath
+	 */
+	@Then("^I click link by xpath \"(.*?)\"$")
+	public void i_click_link_by_xpath(String theXPath) throws Throwable {
 
-  /**
-   * Fill in By ID
-   */
-  @Then("^I fill in \"(.*?)\" by id \"(.*?)\"$")
-  public void i_fill_in_by_id(String id, String value) throws Throwable {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("arguments[0].click()", driver.findElement(By.xpath(theXPath)));
+	}
 
-    // Finn in the email /username
-    WebElement element = driver.findElement(By.id(id));
-    element.sendKeys(value);
-  }
+	/**
+	 * Fill in By ID
+	 */
+	@Then("^I fill in \"(.*?)\" by id \"(.*?)\"$")
+	public void i_fill_in_by_id(String id, String value) throws Throwable {
 
-  /**
-   * Fill in By input Name
-   */
-  @Then("^I fill in \"(.*?)\" by name \"(.*?)\"$")
-  public void i_fill_in_by_name(String name, String value) throws Throwable {
-    WebElement element = driver.findElement(By.name(name));
-    element.sendKeys(value);
-  }
+		// Finn in the email /username
+		WebElement element = driver.findElement(By.id(id));
+		element.sendKeys(value);
+	}
 
-  /**
-   * Form submit By Form ID
-   */
-  @Then("^I submit form by form id \"(.*?)\"$")
-  public void i_submit_form_by_form_id(String formId) throws Throwable {
+	/**
+	 * Fill in By input Name
+	 */
+	@Then("^I fill in \"(.*?)\" by name \"(.*?)\"$")
+	public void i_fill_in_by_name(String name, String value) throws Throwable {
+		WebElement element = driver.findElement(By.name(name));
+		element.sendKeys(value);
+	}
 
-    // Finn in the email /username
-    WebElement element = driver.findElement(By.id(formId));
+	/**
+	 * Form submit By Form ID
+	 */
+	@Then("^I submit form by form id \"(.*?)\"$")
+	public void i_submit_form_by_form_id(String formId) throws Throwable {
 
-    element.submit();
-  }
-    /**
-   * Form submit By Form Name
-   */
-  @Then("^I submit form by form name \"(.*?)\"$")
-  public void i_submit_form_by_form_name(String formName) throws Throwable {
+		// Finn in the email /username
+		WebElement element = driver.findElement(By.id(formId));
 
-    // Finn in the email /username
-    WebElement element = driver.findElement(By.name(formName));
+		element.submit();
+	}
 
-    element.submit();
-  }
+	/**
+	 * Form submit By Form Name
+	 */
+	@Then("^I submit form by form name \"(.*?)\"$")
+	public void i_submit_form_by_form_name(String formName) throws Throwable {
 
-  @Then("^I wait for \"(.*?)\" seconds$")
-  public void i_wait_for_seconds(Long sec) throws Throwable {
-      Thread.sleep(sec * 1000);
-  }
+		// Finn in the email /username
+		WebElement element = driver.findElement(By.name(formName));
 
-  /**
-   * Common Step to Open the site with device
-   * @param pageType For your project to define page type url / init page object
-   * @param screenSize hd-desktop | tablet | mobile
-   * @throws Throwable
-   */
-  @Given("^The web site is opened as \"(.*?)\"$")
-  public void the_web_site_is_opened_as(String screenSize) throws Throwable {
+		element.submit();
+	}
 
-    WebDriver driver = getDriver();
+	@Then("^I wait for \"(.*?)\" seconds$")
+	public void i_wait_for_seconds(Long sec) throws Throwable {
+		Thread.sleep(sec * 1000);
+	}
 
-    if (screenSize.equalsIgnoreCase("desktop"))
-    {
-      // Resize the browser to desktop
-      driver.manage().window().setPosition(new Point(0, 0));
-      driver.manage().window().setSize(new Dimension(1268, 1024));
-    } else if (screenSize.equalsIgnoreCase("hd-desktop"))
-    {
-      // Resize the browser to desktop
-      driver.manage().window().setPosition(new Point(0, 0));
-      driver.manage().window().setSize(new Dimension(1968, 1024));
-    } else if (screenSize.equalsIgnoreCase("mobile")) {
-      // Resize the browser to mobile
-      driver.manage().window().setPosition(new Point(0, 0));
-      driver.manage().window().setSize(new Dimension(320, 568));
-    } else if (screenSize.equalsIgnoreCase("tablet")) {
-      // Resize the browser to mobile
-      driver.manage().window().setPosition(new Point(0, 0));
-      driver.manage().window().setSize(new Dimension(768, 1024));
-    }
-    driver.get(getSiteBaseUrl() + "/" );
-  }
+	/**
+	 * Common Step to Open the site with device
+	 * 
+	 * @param pageType
+	 *            For your project to define page type url / init page object
+	 * @param screenSize
+	 *            hd-desktop | tablet | mobile
+	 * @throws Throwable
+	 */
+	@Given("^The web site is opened as \"(.*?)\"$")
+	public void the_web_site_is_opened_as(String screenSize) throws Throwable {
 
+		WebDriver driver = getDriver();
 
+		if (screenSize.equalsIgnoreCase("desktop")) {
+			// Resize the browser to desktop
+			driver.manage().window().setPosition(new Point(0, 0));
+			driver.manage().window().setSize(new Dimension(1268, 1024));
+		} else if (screenSize.equalsIgnoreCase("hd-desktop")) {
+			// Resize the browser to desktop
+			driver.manage().window().setPosition(new Point(0, 0));
+			driver.manage().window().setSize(new Dimension(1968, 1024));
+		} else if (screenSize.equalsIgnoreCase("mobile")) {
+			// Resize the browser to mobile
+			driver.manage().window().setPosition(new Point(0, 0));
+			driver.manage().window().setSize(new Dimension(320, 568));
+		} else if (screenSize.equalsIgnoreCase("tablet")) {
+			// Resize the browser to mobile
+			driver.manage().window().setPosition(new Point(0, 0));
+			driver.manage().window().setSize(new Dimension(768, 1024));
+		}
+		driver.get(getSiteBaseUrl() + "/");
+	}
+
+	@Given("^Launch chrome browser$")
+	public void launch_chrome_browser() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		System.setProperty("webdriver.chrome.driver","./drivers/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+	}
+
+	@Then("^Enter the URL with \"(.*?)\"$")
+	public void enter_the_URL_with(String siteURL) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		driver.get(siteURL);
+	}
+
+	@Then("^Enter the JobTitle \"(.*?)\"$")
+	public void enter_the_JobTitle(String jobTitle) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//*[@id='keywords']").sendKeys(jobTitle);
+	}
+
+	@Then("^Enter the Postcode \"(.*?)\"$")
+	public void enter_the_Postcode(String postCode) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//*[@name='LTxt']").sendKeys(postCode);
+	}
+
+	@Then("^Enter the Locationtype \"(.*?)\"$")
+	public void enter_the_Locationtype(String location) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		WebElement dropdown = driver.findElementByXPath("//*[@id='LocationType']");
+		Select dropdown1 = new Select(dropdown);
+		dropdown1.selectByValue(location);
+	}
+
+	@Then("^Click on search button$")
+	public void click_on_search_button() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//*[@id='search-button']").click();
+		driver.close();
+
+	}
 
 }

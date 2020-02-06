@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 
 // Default:
-@Cucumber.Options(tags={"@focus"},format = {"pretty", "html:target/cucumber", "json:target/cucumber.json"})
+@Cucumber.Options(tags={"@job"},format = {"pretty", "html:target/cucumber", "json:target/cucumber/cucumber.json"})
 //@Cucumber.Options(tags={"@now"},format = {"pretty", "html:target/cucumber", "json:target/cucumber.json"})
 public class MyProjectTest {
 
