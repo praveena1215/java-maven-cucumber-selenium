@@ -64,6 +64,8 @@ public class BaseScenario {
     String browserName = (String)System.getProperty("browserName","googlechrome");
     String appName = (String)System.getProperty("appName","Zeno Yu");
 
+       
+    
     if (envName.equalsIgnoreCase("local")) {
       String driverDirectory = System.getProperty("user.dir")+"\\drivers\\";
       String driverLocation = System.getProperty("driverLocation",driverDirectory);

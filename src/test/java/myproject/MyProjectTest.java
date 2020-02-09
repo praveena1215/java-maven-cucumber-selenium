@@ -32,17 +32,21 @@
 package myproject;
 
 import base.BaseScenario;
+import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
-@SuppressWarnings("deprecation")
 @RunWith(Cucumber.class)
 
 // Default:
-@Cucumber.Options(tags={"@job"},format = {"pretty", "html:target/cucumber", "json:target/cucumber/cucumber.json"})
+//@Cucumber.Options(tags={"@JobSearch"},format = {"pretty", "html:target/cucumber", "json:target/cucumber/cucumber.json"})
 //@Cucumber.Options(tags={"@now"},format = {"pretty", "html:target/cucumber", "json:target/cucumber.json"})
+
+//@Cucumber.Options(tags={"@JobSearch"},format = {"pretty", "html:target/cucumber", "json:target/cucumber/cucumber.json"})
+//@CucumberOptions(features = "src/test/resources/myproject/homepage/job.feature",glue = "CommonStepDef")
+@CucumberOptions(tags = {"@RegisterCV"},format = {"pretty"} )
 public class MyProjectTest {
 
   @AfterClass 

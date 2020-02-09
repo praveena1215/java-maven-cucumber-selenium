@@ -1,4 +1,4 @@
-@job 
+@JobSearch 
 Feature: Sucessfull job search in Totaljobs website 
 Scenario Outline: Searching jobs for Automation Engineer 
 	Given Launch chrome browser 
@@ -9,5 +9,7 @@ Scenario Outline: Searching jobs for Automation Engineer
 	Then Click on search button 
 	Examples: 
 		| Jobtitle | Postcode | Locationtype |
-		|Test Automation | E6 1JG | 20 |
-		|Java Developer | E6 2JG | 10 |
+		|Test Automation | E6 1JG | 20 |		
+
+	
+	

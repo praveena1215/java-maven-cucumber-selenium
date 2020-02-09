@@ -35,8 +35,10 @@ import org.apache.commons.lang3.StringUtils;
 import base.BaseScenario;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
@@ -47,10 +49,14 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
 import cucumber.api.java.en.When;
+import cucumber.runtime.junit.Assertions;
+import junit.framework.Assert;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
 import static org.junit.Assert.assertTrue;
+
+import java.util.concurrent.TimeUnit;
 
 public class CommonStepDef extends BaseScenario {
 
@@ -249,8 +255,119 @@ public class CommonStepDef extends BaseScenario {
 	public void click_on_search_button() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
 		driver.findElementByXPath("//*[@id='search-button']").click();
-		driver.close();
-
+		
 	}
+	
+
+	
+	@When("^get the value from jobtitle$")
+	public void get_the_value_from_jobtitle() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		String value = driver.findElementByXPath("//*[@id='keywords']").getText();
+		String value1 = driver.findElementByXPath("//input[@id='keywords']").getText();
+		if (value.equals("value1")){
+			System.out.println("Text displayed in JobTitle & What are same");
+		}else {
+			System.out.println("Text displayed in JobTitle & What are same");
+		}
+			
+	    
+	}
+
+	@When("^get the value from Postcode$")
+	public void get_the_value_from_Postcode() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		String value = driver.findElementByXPath("//*[@name='LTxt']").getText();
+		String value2 = driver.findElementByXPath("//input[@id='location']").getText();
+		if(value == value2){
+			System.out.println("The enter location text auto populated correctly");
+		}else{
+			System.out.println("The entered text in Location text box not auto populated correctly");
+		}
+	    
+	}
+
+	@Then("^click on register button$")
+	public void click_on_register_button() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    driver.findElementByXPath("//span[text()='Register CV']").click();
+	}
+
+	@Then("^enter the firstname$")
+	public void enter_the_firstname() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    driver.findElementByXPath("//input[@name='firstname']").sendKeys("Praveen Kumar");
+	    driver.findElementByXPath("//input[@name='firstname']").sendKeys(Keys.PAGE_DOWN);
+	}
+
+	@Then("^enter the surname$")
+	public void enter_the_surname() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//input[@name='surname']").sendKeys("Jaya Kumar");
+	}
+
+	@Then("^enter the email address$")
+	public void enter_the_email_address() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    driver.findElementByXPath("//input[@name='email']").sendKeys("dummy123@gmail.com");
+	    driver.findElementByXPath("//input[@name='email']").sendKeys(Keys.PAGE_DOWN);
+	}
+	
+	@Then("^click on eligible to work in uk button$")
+	public void click_on_eligible_to_work_in_uk_button() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		
+		WebElement radio = driver.findElementByXPath("//input[@id='eligibilityUkYes']");
+		Actions clkradio = new Actions(driver);
+		clkradio.click().perform();
+				
+	}
+
+	@Then("^click on eligible to work in EU$")
+	public void click_on_eligible_to_work_in_EU() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		 WebElement radio = driver.findElementByXPath("//input[@id='eligibilityEuYes']");
+		 Actions clkradio = new Actions(driver);
+		 clkradio.click().perform();
+	    
+	}
+
+	@Then("^select highest value of education$")
+	public void select_highest_value_of_education() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    WebElement educ = driver.findElementByXPath("//select[@name='educationId']");
+	    Select dropdown = new Select(educ);
+	    dropdown.selectByValue("535");
+	}
+
+	@Then("^enter the most/recent job/title$")
+	public void enter_the_most_recent_job_title() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//input[@name='currentJobTitle']");
+	    
+	}
+
+	@Then("^select current/most recent salary$")
+	public void select_current_most_recent_salary() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		WebElement salrange = driver.findElementByXPath("//select[@name='salaryRange']");
+		Select dropdown = new Select(salrange);
+		dropdown.selectByValue("15");
+	    
+	}
+
+	@Then("^enter create password$")
+	public void enter_create_password() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//input[@name='password']").sendKeys("dDummy@123");
+	    
+	}
+
+	@Then("^enter confirm password$")
+	public void enter_confirm_password() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		driver.findElementByXPath("//input[@name='confirmpassword']");
+	}
+	
 
 }
